@@ -13,7 +13,7 @@ def reservation_today():
     try:
         calendar_url = "https://colebergmann.com/sonos/test.ics"
         c = Calendar(requests.get(config_dict["cal_url"]).text)
-        e = list(c.timeline)[0]
+        e = list(c.timeline)[0] # first event in the list
         tprint("Event found for {} (starting {})".format(e.begin.format('YYYY-MM-DD'), e.begin.humanize()))
         if e.begin.format('YYYY-MM-DD') == arrow.utcnow().format('YYYY-MM-DD'):
             tprint("We have a reservation starting today, returning True (from reservation_today)")
@@ -28,5 +28,3 @@ def reservation_today():
 
 def tprint(s):
     print("[Reservation] " + s)
-
-reservation_today()
