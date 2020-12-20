@@ -63,5 +63,11 @@ class DoorSensor:
             self.door_armed = False
         else:
             tprint("Disarm called when door wasn't armed, ignoring")
+    
+    def is_door_open(self):
+        return self.door_open
+
+    def is_door_armed(self):
+        return self.door_armed
 
 DoorSensor()
