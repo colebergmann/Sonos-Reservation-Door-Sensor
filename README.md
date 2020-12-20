@@ -1,2 +1,5 @@
 # Sonos-Reservation-Door-Sensor
-A basic script that runs on a Raspberry Pi to play music on Sonos speakers based on a door sensor and an AirBnB reservation calendar
+This project was created to watch a door sensor with a Raspberry Pi, and automatically trigger Sonos speakers to play music when an AirBnB guest checks in for the first time.
+
+This requires a normally open hardwired door sensor (on GPIO pin X). Or fork this project to add support for 433MHz wireless tx/rx.
+
