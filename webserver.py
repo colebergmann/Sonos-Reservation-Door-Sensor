@@ -13,9 +13,16 @@ def home():
     log_events = []
     with open("events.log") as f:
         log_events = f.readlines()
+    # strip web log lines
+    for item in list(log_events):
+        if "HTTP" in item:
+            log_events.remove(item)
+    log_events.reverse()
+
     status = ""
     btn_name = "ARM DOOR"
     btn_url = "/arm"
+    btn_color = "danger"
     if door_sensor.is_door_open():
         status = "OPENED, "
     else:
@@ -23,11 +30,22 @@ def home():
     
     if door_sensor.is_door_armed():
         status += "ARMED"
-        btn_name = "UNARM DOOR"
-        btn_url = "/unarm"
+        btn_name = "DISARM DOOR"
+        btn_url = "/disarm"
+        btn_color = "success"
     else:
         status += "NOT ARMED"
-    return render_template('main.html', title='Home', data=config_dict, events=log_events, status_msg=status, btn_name=btn_name, btn_url=btn_url)
+    return render_template('main.html', title='Home', data=config_dict, events=log_events, status_msg=status, btn_name=btn_name, btn_url=btn_url, btn_color=btn_color)
+
+@app.route("/arm")
+def armdoor():
+    door_sensor.arm_door()
+    return redirect("/", code=303)
+
+@app.route("/disarm")
+def unarmdoor():
+    door_sensor.disarm_door()
+    return redirect("/", code=303)
 
 # start the webserver
 if __name__ == "__main__":
