@@ -11,10 +11,9 @@ class DoorScheduler:
         Timer(60.0, self.check_time).start()
         current_time = arrow.utcnow().to('US/Pacific').format('HH:mm')
         if current_time == self.arm_time:
-            self.arm_check
+            self.arm_check()
         elif current_time == self.disarm_time:
             self.disarm_check()
-        print(">>>>Time check, door_open=" + str(self.door_sensor.is_door_open()))
  
     # init with whatever parameters 
     def __init__(self, door_sensor):

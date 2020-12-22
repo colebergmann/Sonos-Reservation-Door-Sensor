@@ -24,8 +24,8 @@ class Sonos:
         # Perform some actions on the group
         try:
             if self.group:
-                self.group.volume = 1
-                self.group.play_uri("https://colebergmann.com/sonos/test4.mp3")
+                self.group.volume = config_dict["sonos_volume"]
+                self.group.play_uri(config_dict["sonos_track_url"])
                 self.group.pause()
             else:
                 raise Exception("Speaker group was null, can't control if we didn't find the group we wanted")

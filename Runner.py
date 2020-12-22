@@ -1,6 +1,6 @@
 # clear console before starting
 for i in range(0,40):
-    print("\n")
+    print("")
 
 from config import config_dict
 from DoorSensor import DoorSensor
