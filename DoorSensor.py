@@ -2,9 +2,10 @@ import time
 from threading import Thread, Lock, Timer
 from config import config_dict
 import arrow as arrow
+from Sonos import Sonos
 
 def tprint(s):
-        print("[DoorSensor] " + s)
+        print("\033[94m" + arrow.utcnow().to('US/Pacific').format('MM/DD/YYYY HH:mm') + " [DoorSensor]\033[0m " + s)
 
 on_pi_hardware = False
 try:
@@ -22,7 +23,8 @@ class DoorSensor:
     sensor_pin = config_dict["sensor_pin"]
 
     # init with whatever parameters 
-    def __init__(self):
+    def __init__(self, sonos):
+        self.sonos = sonos
         tprint("Constructed DoorSensor with pin " + str(self.sensor_pin))
         if on_pi_hardware:
             self.spawn_loop()
@@ -48,14 +50,17 @@ class DoorSensor:
                 else:
                     tprint("Door closed")
                 time.sleep(1)
+            time.sleep(0.1)
     
     def armed_door_opened(self):
         tprint("Armed door was opened, playing music and disarming...")
         self.door_armed = False
+        self.sonos.trigger()
 
     def arm_door(self):
         tprint("------ Door is now ARMED ------")
         self.door_armed = True
+        self.sonos.prepare()
     
     def disarm_door(self):
         if self.door_armed:
@@ -69,5 +74,3 @@ class DoorSensor:
 
     def is_door_armed(self):
         return self.door_armed
-
-DoorSensor()
