@@ -32,5 +32,3 @@ def reservation_today():
 
 def tprint(s):
     print("\033[94m" + arrow.utcnow().to('US/Pacific').format('MM/DD/YYYY HH:mm') + " [Reservation]\033[0m " + s)
-
-reservation_today()
